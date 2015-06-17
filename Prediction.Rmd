@@ -1,0 +1,116 @@
+---
+title: "Activity Prediction"
+author: "Jean-Jacques Brière"
+date: "Wednesday, June 17, 2015"
+output: html_document
+---
+# Object
+
+This document presents a prediction algoritm computing personal activity records in order to evaluate the quality of a barbell lifts training.
+More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).
+
+# Getting the data
+
+```{r "downloading data"}
+library(lattice);library(ggplot2);library(caret)
+train <- read.csv("./pml-training.csv")
+test <- read.csv("./pml-testing.csv")
+dim(train)
+names(train)
+```
+
+A simple look at the names (and some quick views) of the data shows that the 160 features are:  
+
+- 7 features (first names) corresponding to the conditions in which each test was realized (who, when?)  
+- 152 features corresponding to the mouvements of each tests (potential predictors)
+- 1 feature (the last one) "classe" indicating the manner the exercice was done  
+
+So we should disregard the first 7 columns for our predictors
+
+# Cleaning the data
+
+Let's get a summary of each potential predictor  
+
+```{r "overviewing data"}
+train0 <- train
+NonPred <- 1:7
+train0 <- train0[,-NonPred]
+summary(train0)
+```
+It appears that:  
+- some features have a lot of NA (ex: max_roll_belt)  
+- some features have low variability (ex: max_yaw_belt)  
+- somme features have #DIV/0! values (kurtosis_roll_belt) but they all fall in our low variabily category  
+  
+so we are not going to use these features in our prediction model  
+```{r "cleaning data"}
+NAfeat <- which(apply(train0,2,function(x) sum(is.na(x))/length(x))>0.97)
+train0 <- train0[,-NAfeat] # extracting features with more than 97% of NA values
+NonVar <- nzv(train0)
+train0 <- train0[,-NonVar] # extracting features with too few variability
+test0 <- test[,-NonPred][,-NAfeat][,-NonVar] # same thing on test set
+names(train0) # list of predictors
+```
+
+We end up with 52 predictors  
+
+# Creating a cross validaton set among the "train0" set
+
+```{r "creating training and cross validation data"}
+set.seed(1321321)
+inTrain <- createDataPartition(y = train0$classe, p = 0.7, list = FALSE)
+training <- train0[inTrain,]
+cv <- train0[-inTrain,]
+```
+
+We have a training set (training) on which we are going to perform different prediction models. Each model is going to be tested on the cross-validation set (cv). The best model will be finally use to evaluate the test set.
+
+# Choice of the prediction model to use
+
+In order to find a good prediction model, we are going to test the following methods:  
+- Recursive Partitioning and Regression Trees  
+- Linear Discriminent analysis  
+- Boosting  
+- Random Forest  
+
+using the training set  
+
+
+```{r results='hide',"fitting data"}
+set.seed(6464);library(rpart);library(randomForest);library(adabag)
+fitClassTree <- train(classe~.,data=training,method="rpart")
+fitRandFor <- randomForest(x=training[,-53], y = training[,53])
+fitLDA  <- train(classe~.,data=training,method="lda")
+fitBoost <- train(classe~.,data=training,method="gbm",verbose=FALSE)
+```
+
+
+# Choosing the best model
+
+In order to select the 'best' method, we'll compare accuracy of the models on the cross-validation set
+
+```{r "estimating accuracy of methods"}
+cvClassTree <- predict(fitClassTree,newdata=cv)
+cvRandFor <- predict(fitRandFor,newdata=cv)
+cvLDA <- predict(fitLDA,newdata=cv)
+cvBoost <- predict(fitBoost,newdata=cv)
+
+confClassTree <- confusionMatrix(cvClassTree,cv$classe)
+confRandTree <- confusionMatrix(cvRandFor,cv$classe)
+confLDA <- confusionMatrix(cvLDA,cv$classe)
+confBoost <- confusionMatrix(cvBoost,cv$classe)
+
+print(c(paste("Accuracy with the Recursive Partitioning and Regression Trees =",round(confClassTree$overall[1],2)),
+           paste("Accuracy with the Random Forest method =",round(confRandTree$overall[1],2)),
+           paste("Accuracy with the Linear Discriminent Analysis method =",round(confLDA$overall[1],2)),
+           paste("Accuracy with the Boost method =",round(confBoost$overall[1],2))))
+```
+
+# Conclusion
+
+The best model seems to be the random forest
+
+# Evaluation of the Random Forest on the test set
+```{r "predicting test set"}
+predict(fitRandFor,newdata=test0)
+```
