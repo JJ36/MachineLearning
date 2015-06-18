@@ -11,7 +11,7 @@ More information is available from the website here: http://groupware.les.inf.pu
 
 # Getting the data
 
-```{r "downloading data"}
+```{r results='asis',"downloading data"}
 library(lattice);library(ggplot2);library(caret)
 train <- read.csv("./pml-training.csv")
 test <- read.csv("./pml-testing.csv")
@@ -76,7 +76,7 @@ In order to find a good prediction model, we are going to test the following met
 using the training set  
 
 
-```{r results='hide',"fitting data"}
+```{r results='asis',"fitting data"}
 set.seed(6464);library(rpart);library(randomForest);library(adabag)
 fitClassTree <- train(classe~.,data=training,method="rpart")
 fitRandFor <- randomForest(x=training[,-53], y = training[,53])

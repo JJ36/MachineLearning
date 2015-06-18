@@ -77,88 +77,9 @@ img {
 train &lt;- read.csv(&quot;./pml-training.csv&quot;)
 test &lt;- read.csv(&quot;./pml-testing.csv&quot;)
 dim(train)</code></pre>
-<pre><code>## [1] 19622   160</code></pre>
+<p>[1] 19622 160</p>
 <pre class="r"><code>names(train)</code></pre>
-<pre><code>##   [1] &quot;X&quot;                        &quot;user_name&quot;               
-##   [3] &quot;raw_timestamp_part_1&quot;     &quot;raw_timestamp_part_2&quot;    
-##   [5] &quot;cvtd_timestamp&quot;           &quot;new_window&quot;              
-##   [7] &quot;num_window&quot;               &quot;roll_belt&quot;               
-##   [9] &quot;pitch_belt&quot;               &quot;yaw_belt&quot;                
-##  [11] &quot;total_accel_belt&quot;         &quot;kurtosis_roll_belt&quot;      
-##  [13] &quot;kurtosis_picth_belt&quot;      &quot;kurtosis_yaw_belt&quot;       
-##  [15] &quot;skewness_roll_belt&quot;       &quot;skewness_roll_belt.1&quot;    
-##  [17] &quot;skewness_yaw_belt&quot;        &quot;max_roll_belt&quot;           
-##  [19] &quot;max_picth_belt&quot;           &quot;max_yaw_belt&quot;            
-##  [21] &quot;min_roll_belt&quot;            &quot;min_pitch_belt&quot;          
-##  [23] &quot;min_yaw_belt&quot;             &quot;amplitude_roll_belt&quot;     
-##  [25] &quot;amplitude_pitch_belt&quot;     &quot;amplitude_yaw_belt&quot;      
-##  [27] &quot;var_total_accel_belt&quot;     &quot;avg_roll_belt&quot;           
-##  [29] &quot;stddev_roll_belt&quot;         &quot;var_roll_belt&quot;           
-##  [31] &quot;avg_pitch_belt&quot;           &quot;stddev_pitch_belt&quot;       
-##  [33] &quot;var_pitch_belt&quot;           &quot;avg_yaw_belt&quot;            
-##  [35] &quot;stddev_yaw_belt&quot;          &quot;var_yaw_belt&quot;            
-##  [37] &quot;gyros_belt_x&quot;             &quot;gyros_belt_y&quot;            
-##  [39] &quot;gyros_belt_z&quot;             &quot;accel_belt_x&quot;            
-##  [41] &quot;accel_belt_y&quot;             &quot;accel_belt_z&quot;            
-##  [43] &quot;magnet_belt_x&quot;            &quot;magnet_belt_y&quot;           
-##  [45] &quot;magnet_belt_z&quot;            &quot;roll_arm&quot;                
-##  [47] &quot;pitch_arm&quot;                &quot;yaw_arm&quot;                 
-##  [49] &quot;total_accel_arm&quot;          &quot;var_accel_arm&quot;           
-##  [51] &quot;avg_roll_arm&quot;             &quot;stddev_roll_arm&quot;         
-##  [53] &quot;var_roll_arm&quot;             &quot;avg_pitch_arm&quot;           
-##  [55] &quot;stddev_pitch_arm&quot;         &quot;var_pitch_arm&quot;           
-##  [57] &quot;avg_yaw_arm&quot;              &quot;stddev_yaw_arm&quot;          
-##  [59] &quot;var_yaw_arm&quot;              &quot;gyros_arm_x&quot;             
-##  [61] &quot;gyros_arm_y&quot;              &quot;gyros_arm_z&quot;             
-##  [63] &quot;accel_arm_x&quot;              &quot;accel_arm_y&quot;             
-##  [65] &quot;accel_arm_z&quot;              &quot;magnet_arm_x&quot;            
-##  [67] &quot;magnet_arm_y&quot;             &quot;magnet_arm_z&quot;            
-##  [69] &quot;kurtosis_roll_arm&quot;        &quot;kurtosis_picth_arm&quot;      
-##  [71] &quot;kurtosis_yaw_arm&quot;         &quot;skewness_roll_arm&quot;       
-##  [73] &quot;skewness_pitch_arm&quot;       &quot;skewness_yaw_arm&quot;        
-##  [75] &quot;max_roll_arm&quot;             &quot;max_picth_arm&quot;           
-##  [77] &quot;max_yaw_arm&quot;              &quot;min_roll_arm&quot;            
-##  [79] &quot;min_pitch_arm&quot;            &quot;min_yaw_arm&quot;             
-##  [81] &quot;amplitude_roll_arm&quot;       &quot;amplitude_pitch_arm&quot;     
-##  [83] &quot;amplitude_yaw_arm&quot;        &quot;roll_dumbbell&quot;           
-##  [85] &quot;pitch_dumbbell&quot;           &quot;yaw_dumbbell&quot;            
-##  [87] &quot;kurtosis_roll_dumbbell&quot;   &quot;kurtosis_picth_dumbbell&quot; 
-##  [89] &quot;kurtosis_yaw_dumbbell&quot;    &quot;skewness_roll_dumbbell&quot;  
-##  [91] &quot;skewness_pitch_dumbbell&quot;  &quot;skewness_yaw_dumbbell&quot;   
-##  [93] &quot;max_roll_dumbbell&quot;        &quot;max_picth_dumbbell&quot;      
-##  [95] &quot;max_yaw_dumbbell&quot;         &quot;min_roll_dumbbell&quot;       
-##  [97] &quot;min_pitch_dumbbell&quot;       &quot;min_yaw_dumbbell&quot;        
-##  [99] &quot;amplitude_roll_dumbbell&quot;  &quot;amplitude_pitch_dumbbell&quot;
-## [101] &quot;amplitude_yaw_dumbbell&quot;   &quot;total_accel_dumbbell&quot;    
-## [103] &quot;var_accel_dumbbell&quot;       &quot;avg_roll_dumbbell&quot;       
-## [105] &quot;stddev_roll_dumbbell&quot;     &quot;var_roll_dumbbell&quot;       
-## [107] &quot;avg_pitch_dumbbell&quot;       &quot;stddev_pitch_dumbbell&quot;   
-## [109] &quot;var_pitch_dumbbell&quot;       &quot;avg_yaw_dumbbell&quot;        
-## [111] &quot;stddev_yaw_dumbbell&quot;      &quot;var_yaw_dumbbell&quot;        
-## [113] &quot;gyros_dumbbell_x&quot;         &quot;gyros_dumbbell_y&quot;        
-## [115] &quot;gyros_dumbbell_z&quot;         &quot;accel_dumbbell_x&quot;        
-## [117] &quot;accel_dumbbell_y&quot;         &quot;accel_dumbbell_z&quot;        
-## [119] &quot;magnet_dumbbell_x&quot;        &quot;magnet_dumbbell_y&quot;       
-## [121] &quot;magnet_dumbbell_z&quot;        &quot;roll_forearm&quot;            
-## [123] &quot;pitch_forearm&quot;            &quot;yaw_forearm&quot;             
-## [125] &quot;kurtosis_roll_forearm&quot;    &quot;kurtosis_picth_forearm&quot;  
-## [127] &quot;kurtosis_yaw_forearm&quot;     &quot;skewness_roll_forearm&quot;   
-## [129] &quot;skewness_pitch_forearm&quot;   &quot;skewness_yaw_forearm&quot;    
-## [131] &quot;max_roll_forearm&quot;         &quot;max_picth_forearm&quot;       
-## [133] &quot;max_yaw_forearm&quot;          &quot;min_roll_forearm&quot;        
-## [135] &quot;min_pitch_forearm&quot;        &quot;min_yaw_forearm&quot;         
-## [137] &quot;amplitude_roll_forearm&quot;   &quot;amplitude_pitch_forearm&quot; 
-## [139] &quot;amplitude_yaw_forearm&quot;    &quot;total_accel_forearm&quot;     
-## [141] &quot;var_accel_forearm&quot;        &quot;avg_roll_forearm&quot;        
-## [143] &quot;stddev_roll_forearm&quot;      &quot;var_roll_forearm&quot;        
-## [145] &quot;avg_pitch_forearm&quot;        &quot;stddev_pitch_forearm&quot;    
-## [147] &quot;var_pitch_forearm&quot;        &quot;avg_yaw_forearm&quot;         
-## [149] &quot;stddev_yaw_forearm&quot;       &quot;var_yaw_forearm&quot;         
-## [151] &quot;gyros_forearm_x&quot;          &quot;gyros_forearm_y&quot;         
-## [153] &quot;gyros_forearm_z&quot;          &quot;accel_forearm_x&quot;         
-## [155] &quot;accel_forearm_y&quot;          &quot;accel_forearm_z&quot;         
-## [157] &quot;magnet_forearm_x&quot;         &quot;magnet_forearm_y&quot;        
-## [159] &quot;magnet_forearm_z&quot;         &quot;classe&quot;</code></pre>
+<p>[1] “X” “user_name”<br /> [3] “raw_timestamp_part_1” “raw_timestamp_part_2”<br /> [5] “cvtd_timestamp” “new_window”<br /> [7] “num_window” “roll_belt”<br /> [9] “pitch_belt” “yaw_belt”<br /> [11] “total_accel_belt” “kurtosis_roll_belt”<br /> [13] “kurtosis_picth_belt” “kurtosis_yaw_belt”<br /> [15] “skewness_roll_belt” “skewness_roll_belt.1”<br /> [17] “skewness_yaw_belt” “max_roll_belt”<br /> [19] “max_picth_belt” “max_yaw_belt”<br /> [21] “min_roll_belt” “min_pitch_belt”<br /> [23] “min_yaw_belt” “amplitude_roll_belt”<br /> [25] “amplitude_pitch_belt” “amplitude_yaw_belt”<br /> [27] “var_total_accel_belt” “avg_roll_belt”<br /> [29] “stddev_roll_belt” “var_roll_belt”<br /> [31] “avg_pitch_belt” “stddev_pitch_belt”<br /> [33] “var_pitch_belt” “avg_yaw_belt”<br /> [35] “stddev_yaw_belt” “var_yaw_belt”<br /> [37] “gyros_belt_x” “gyros_belt_y”<br /> [39] “gyros_belt_z” “accel_belt_x”<br /> [41] “accel_belt_y” “accel_belt_z”<br /> [43] “magnet_belt_x” “magnet_belt_y”<br /> [45] “magnet_belt_z” “roll_arm”<br /> [47] “pitch_arm” “yaw_arm”<br /> [49] “total_accel_arm” “var_accel_arm”<br /> [51] “avg_roll_arm” “stddev_roll_arm”<br /> [53] “var_roll_arm” “avg_pitch_arm”<br /> [55] “stddev_pitch_arm” “var_pitch_arm”<br /> [57] “avg_yaw_arm” “stddev_yaw_arm”<br /> [59] “var_yaw_arm” “gyros_arm_x”<br /> [61] “gyros_arm_y” “gyros_arm_z”<br /> [63] “accel_arm_x” “accel_arm_y”<br /> [65] “accel_arm_z” “magnet_arm_x”<br /> [67] “magnet_arm_y” “magnet_arm_z”<br /> [69] “kurtosis_roll_arm” “kurtosis_picth_arm”<br /> [71] “kurtosis_yaw_arm” “skewness_roll_arm”<br /> [73] “skewness_pitch_arm” “skewness_yaw_arm”<br /> [75] “max_roll_arm” “max_picth_arm”<br /> [77] “max_yaw_arm” “min_roll_arm”<br /> [79] “min_pitch_arm” “min_yaw_arm”<br /> [81] “amplitude_roll_arm” “amplitude_pitch_arm”<br /> [83] “amplitude_yaw_arm” “roll_dumbbell”<br /> [85] “pitch_dumbbell” “yaw_dumbbell”<br /> [87] “kurtosis_roll_dumbbell” “kurtosis_picth_dumbbell” [89] “kurtosis_yaw_dumbbell” “skewness_roll_dumbbell”<br /> [91] “skewness_pitch_dumbbell” “skewness_yaw_dumbbell”<br /> [93] “max_roll_dumbbell” “max_picth_dumbbell”<br /> [95] “max_yaw_dumbbell” “min_roll_dumbbell”<br /> [97] “min_pitch_dumbbell” “min_yaw_dumbbell”<br /> [99] “amplitude_roll_dumbbell” “amplitude_pitch_dumbbell” [101] “amplitude_yaw_dumbbell” “total_accel_dumbbell”<br />[103] “var_accel_dumbbell” “avg_roll_dumbbell”<br />[105] “stddev_roll_dumbbell” “var_roll_dumbbell”<br />[107] “avg_pitch_dumbbell” “stddev_pitch_dumbbell”<br />[109] “var_pitch_dumbbell” “avg_yaw_dumbbell”<br />[111] “stddev_yaw_dumbbell” “var_yaw_dumbbell”<br />[113] “gyros_dumbbell_x” “gyros_dumbbell_y”<br />[115] “gyros_dumbbell_z” “accel_dumbbell_x”<br />[117] “accel_dumbbell_y” “accel_dumbbell_z”<br />[119] “magnet_dumbbell_x” “magnet_dumbbell_y”<br />[121] “magnet_dumbbell_z” “roll_forearm”<br />[123] “pitch_forearm” “yaw_forearm”<br />[125] “kurtosis_roll_forearm” “kurtosis_picth_forearm”<br />[127] “kurtosis_yaw_forearm” “skewness_roll_forearm”<br />[129] “skewness_pitch_forearm” “skewness_yaw_forearm”<br />[131] “max_roll_forearm” “max_picth_forearm”<br />[133] “max_yaw_forearm” “min_roll_forearm”<br />[135] “min_pitch_forearm” “min_yaw_forearm”<br />[137] “amplitude_roll_forearm” “amplitude_pitch_forearm” [139] “amplitude_yaw_forearm” “total_accel_forearm”<br />[141] “var_accel_forearm” “avg_roll_forearm”<br />[143] “stddev_roll_forearm” “var_roll_forearm”<br />[145] “avg_pitch_forearm” “stddev_pitch_forearm”<br />[147] “var_pitch_forearm” “avg_yaw_forearm”<br />[149] “stddev_yaw_forearm” “var_yaw_forearm”<br />[151] “gyros_forearm_x” “gyros_forearm_y”<br />[153] “gyros_forearm_z” “accel_forearm_x”<br />[155] “accel_forearm_y” “accel_forearm_z”<br />[157] “magnet_forearm_x” “magnet_forearm_y”<br />[159] “magnet_forearm_z” “classe”</p>
 <p>A simple look at the names (and some quick views) of the data shows that the 160 features are:</p>
 <ul>
 <li>7 features (first names) corresponding to the conditions in which each test was realized (who, when?)<br /></li>
